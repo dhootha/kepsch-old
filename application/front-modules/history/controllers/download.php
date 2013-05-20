@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Download extends MX_Controller {
+class History extends MX_Controller {
 
 	private $verify = 'verify';
 

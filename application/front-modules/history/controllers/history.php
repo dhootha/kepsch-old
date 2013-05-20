@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Download extends MX_Controller {
+class History extends MX_Controller {
 
 	private $verify = 'verify';
 
@@ -8,7 +8,7 @@ class Download extends MX_Controller {
 	{
  		parent::__construct();
  		$this->load->helper('download');
- 		$this->load->model('mdownload');
+ 		$this->load->model('mhistory');
  		$this->load->library('form_validation');
 
  		$this->output->enable_profiler(false);
@@ -27,7 +27,7 @@ class Download extends MX_Controller {
  	public function index()
 	{
 		$this->template 		
-			->set('list',$this->mdownload->get())
+			->set('list',$this->mhistory->get())
 			->build($this->router->class);	
 
 	}
@@ -64,7 +64,7 @@ class Download extends MX_Controller {
 					$data['file'] = $this->upload_zip('image');
 				}	
 
-				$this->mdownload->create($data);
+				$this->mhistory->create($data);
 
 				$this->session->set_flashdata('info',sprintf($this->config->item('created_info'),$this->input->post('name')));
 
@@ -83,7 +83,7 @@ class Download extends MX_Controller {
 
 		if ($id != null)
 		{
-			$spec = $this->mdownload->read($id);
+			$spec = $this->mhistory->read($id);
 			$this->template->set('item',$spec);
 
 			if ($this->uri->segment(3) == $this->verify)
@@ -101,7 +101,7 @@ class Download extends MX_Controller {
 						'filename'		=>	$this->input->post('filename'),
 					);
 
-					$data['image'] = $this->mdownload->image($this->input->post('id'));
+					$data['image'] = $this->mhistory->image($this->input->post('id'));
 
 					if ($_FILES['image']['name'] != '') 
 					{
@@ -110,7 +110,7 @@ class Download extends MX_Controller {
 						if ($filename != null) { $data['image'] = $filename; }
 					}
 
-					$data['file'] = $this->mdownload->file($this->input->post('id'));
+					$data['file'] = $this->mhistory->file($this->input->post('id'));
 
 					if ($_FILES['file']['name'] != '') 
 					{
@@ -119,7 +119,7 @@ class Download extends MX_Controller {
 						if ($filename != null) { $data['file'] = $filename; }
 					}
 
-					$this->mdownload->update($data,$this->input->post('id'));
+					$this->mhistory->update($data,$this->input->post('id'));
 
 					$this->session->set_flashdata('info',sprintf($this->config->item('edited_info'),$this->input->post('name')));
 
@@ -141,7 +141,7 @@ class Download extends MX_Controller {
 
 		if ($id != null)
 		{
-			$spec = $this->mdownload->read($id);
+			$spec = $this->mhistory->read($id);
 			$this->template->set('item',$spec);
 		
 			if ($this->uri->segment(3) == $this->verify)
@@ -152,7 +152,7 @@ class Download extends MX_Controller {
 				{
 					if (md5($this->input->post('password')) == $this->config->item('super')) 
 					{
-						$this->mdownload->delete($this->input->post('id'));
+						$this->mhistory->delete($this->input->post('id'));
 						$this->session->set_flashdata('info',sprintf($this->config->item('deleted_info'),$this->input->post('name')));
 					} else {
 						$this->session->set_flashdata('info',$this->config->item('bad_super'));
@@ -223,16 +223,16 @@ class Download extends MX_Controller {
     	if ($id != null) 
     	{
     		echo 'download';
-    		$file = $this->mdownload->file($id);
+    		$file = $this->mhistory->file($id);
     		
     		if ($file) 
     		{
     			$data = file_get_contents("./uploads/".$file); // Read the file's contents
-				$name = $this->mdownload->filename($id);
+				$name = $this->mhistory->filename($id);
 
 				if (!$this->lib->logged() || !$this->lib->admin()) 			
 				{
-					$this->mdownload->increment($id);
+					$this->mhistory->increment($id);
 				}
 
 				force_download($name, $data);

@@ -7,8 +7,7 @@
 		<br>
 		<table style=" width: 100%" class="center download" >
 
-			<tr><td colspan="3">
-				Ти можеш завантажити останню версію розкладу тут <a href="https://github.com/flashbag/kepsch" target="_blank">https://github.com/flashbag/kepsch</a>
+			
 			<?php if ($this->lib->logged() && $this->lib->admin()) : ?>
 				<tr><td colspan="2" >
 				<span class="link load"><a href="<?php echo base_url().$this->router->class.'/create'; ?>"><?php echo $this->config->item('add'); ?></a></span>
