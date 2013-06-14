@@ -134,7 +134,7 @@ function changeText(idElement, filename) {
 		<a href="<?php echo $this->config->item('base').'/teachers'?>">викладачі</a>
 		<a href="<?php echo $this->config->item('base').'/theme'?>">змінити тему</a>
 
-		<a href="<?php echo $this->config->item('base').'/history'?>">історія</a>
+		<a href="<?php echo $this->config->item('base').'/download'?>">історія</a>
 		<?php if ($this->session->userdata('user_id')) : ?>
 
 		<a href="<?php echo $this->config->item('base').'/logout'?>">вийти [<?php echo $this->session->userdata('username'); ?>]</a>			
